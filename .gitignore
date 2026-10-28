@@ -1,0 +1,37 @@
+# Project-local package and tool folders (docs/guides/local-setup.md §6)
+.nuget/
+node_modules/
+
+# .NET build output
+bin/
+obj/
+TestResults/
+*.user
+
+# Front-end build output and test reports
+frontend/dist/
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+
+# Built SPA copied into the Api for production
+backend/src/OnboardingPortal.Api/wwwroot/
+
+# Secrets and local environment files — never committed
+.env
+.env.*
+*.pfx
+*.key
+
+# Editors and OS
+.vs/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+Thumbs.db
+.DS_Store
+
+*.vtt
+*.xlsx
+*.rar

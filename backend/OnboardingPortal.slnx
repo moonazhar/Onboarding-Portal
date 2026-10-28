@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OnboardingPortal.Domain/OnboardingPortal.Domain.csproj" />
+    <Project Path="src/OnboardingPortal.Application/OnboardingPortal.Application.csproj" />
+    <Project Path="src/OnboardingPortal.Infrastructure/OnboardingPortal.Infrastructure.csproj" />
+    <Project Path="src/OnboardingPortal.Api/OnboardingPortal.Api.csproj" />
+    <Project Path="src/OnboardingPortal.Worker/OnboardingPortal.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OnboardingPortal.Tests/OnboardingPortal.Tests.csproj" />
+  </Folder>
+</Solution>

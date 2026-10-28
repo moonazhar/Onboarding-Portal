@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <UserSecretsId>dd2299ba-328a-4e2d-8012-7c6d4547ec63</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnboardingPortal.Application\OnboardingPortal.Application.csproj" />
+    <ProjectReference Include="..\OnboardingPortal.Domain\OnboardingPortal.Domain.csproj" />
+    <ProjectReference Include="..\OnboardingPortal.Infrastructure\OnboardingPortal.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

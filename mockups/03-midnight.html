@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03 Midnight · Onboarding Portal mockup</title>
+<!-- Mockup only. The real app must self-host fonts (frontend.md §8: no CDN). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --p0:#EEF0FF;--p1:#DADEFF;--p2:#B8BFFF;--p3:#959FFF;--p4:#7B87FF;--p5:#6E7BFF;--p6:#5A66E8;--p7:#4851C4;--p8:#383F9C;--p9:#2A2F74;
+  --primary:var(--p5);--primary-hover:var(--p4);--primary-soft:rgba(110,123,255,.14);
+  --cyan:#3DD6D0;
+  --bg:#090B10;--side:#0D1016;--surface:#12151C;--surface-2:#181C25;--hover:#1C212B;--border:#222734;--border-strong:#2F3546;
+  --text:#E7E9EF;--muted:#9AA2B5;--faint:#6D7489;
+  --success:#34D399;--warning:#F5B84B;--danger:#F87171;--info:#60A5FA;
+  --reserved:#F5B84B;--reserved-bg:rgba(245,184,75,.12);--confirmed:#9AA3FF;--confirmed-bg:rgba(110,123,255,.16);--live:#34D399;--live-bg:rgba(52,211,153,.12);
+  --font:'Manrope',system-ui,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:500 14px/1.5 var(--font);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+h1,h2,h3,p{margin:0}
+button,input{font:inherit;color:inherit}
+a{color:var(--p3);text-decoration:none;font-weight:600}
+a:hover{color:var(--p2)}
+:focus-visible{outline:2px solid var(--p4);outline-offset:2px}
+.ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:15px;height:15px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 14px;border-radius:10px;border:1px solid transparent;font-weight:700;font-size:13.5px;cursor:pointer}
+.btn-primary{background:linear-gradient(180deg,#7C88FF,#5C68F0);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 6px 20px -6px rgba(110,123,255,.6)}
+.btn-primary:hover{background:linear-gradient(180deg,#8A95FF,#6874F5)}
+.btn-default{background:var(--surface-2);border-color:var(--border-strong);color:var(--text)}
+.btn-default:hover{background:var(--hover)}
+.btn-subtle{background:transparent;color:var(--p3)}
+.btn-subtle:hover{background:var(--primary-soft)}
+.btn-danger{background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.3);color:var(--danger)}
+.btn-block{width:100%;height:46px;font-size:15px}
+.field{display:grid;gap:7px}
+.field label{font-weight:600;font-size:13px;color:#C9CEDA}
+.label-row{display:flex;justify-content:space-between;align-items:baseline}
+.label-row a{font-size:13px}
+.control{position:relative;display:flex;align-items:center}
+.control>.ic{position:absolute;left:13px;color:var(--faint);pointer-events:none}
+.control input{width:100%;height:46px;padding:0 44px 0 40px;border:1px solid var(--border-strong);border-radius:10px;background:#0B0E14;outline:none;transition:border-color .15s,box-shadow .15s}
+.control input::placeholder{color:#555C70}
+.control input:focus{border-color:var(--p5);box-shadow:0 0 0 4px rgba(110,123,255,.18)}
+.pw-btn{position:absolute;right:6px;width:34px;height:34px;display:grid;place-items:center;border:0;background:none;border-radius:8px;color:var(--faint);cursor:pointer}
+.pw-btn:hover{background:var(--hover);color:var(--text)}
+
+/* ---------- Auth ---------- */
+.auth{position:relative;min-height:100vh;display:grid;place-items:center;padding:40px 20px 96px;overflow:hidden;background:
+  radial-gradient(900px 520px at 12% -10%,rgba(110,123,255,.28),transparent 60%),
+  radial-gradient(700px 480px at 100% 110%,rgba(61,214,208,.16),transparent 60%),var(--bg)}
+.auth::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px;-webkit-mask-image:radial-gradient(ellipse at center,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at center,#000 10%,transparent 70%)}
+.auth-col{position:relative;width:100%;max-width:412px}
+.auth-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:15px;color:var(--text);letter-spacing:-.01em}
+.logo{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:conic-gradient(from 210deg,#6E7BFF,#3DD6D0,#6E7BFF);color:#0B0E14}
+.logo span{width:12px;height:12px;border-radius:3px;background:#0B0E14;transform:rotate(45deg)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;border:1px solid var(--border-strong);background:rgba(18,21,28,.6);font-size:12px;color:var(--muted)}
+.chip .ic{color:var(--success)}
+.glass{background:rgba(18,21,28,.78);border:1px solid var(--border);border-radius:18px;padding:32px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(14px)}
+.login-form{display:grid;gap:20px}
+.login-form h2{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);margin-top:-12px;font-size:14px}
+.alert{display:flex;gap:10px;padding:12px 14px;border-radius:10px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.28);color:#FECACA;font-size:13.5px}
+.alert .ic{margin-top:1px;color:var(--danger)}
+.alert b{display:block;color:#FEE2E2}
+.divider{height:1px;background:var(--border);margin:2px 0}
+.secure-note{display:flex;gap:8px;align-items:center;color:var(--faint);font-size:12.5px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);justify-self:start}
+.mfa-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--primary-soft);color:var(--p3);border:1px solid rgba(110,123,255,.3)}
+.mfa-icon .ic{width:24px;height:24px}
+.otp{height:62px;width:100%;border:1px solid var(--border-strong);border-radius:12px;background:#0B0E14;text-align:center;font:500 30px var(--mono);letter-spacing:.6em;padding-left:.6em;outline:none;color:#fff}
+.otp::placeholder{color:#3A4050}
+.otp:focus{border-color:var(--p5);box-shadow:0 0 0 4px rgba(110,123,255,.18)}
+.alt-link{text-align:center;color:var(--muted);font-size:13.5px}
+.auth-foot{margin-top:20px;text-align:center;font-size:12px;color:var(--faint)}
+
+/* ---------- App shell: full-height sidebar ---------- */
+.shell{min-height:100vh;display:grid;grid-template-columns:256px minmax(0,1fr);grid-template-rows:60px 1fr;grid-template-areas:"side top" "side main"}
+.shell.collapsed{grid-template-columns:72px minmax(0,1fr)}
+.sidebar{grid-area:side;position:sticky;top:0;height:100vh;overflow:auto;background:var(--side);border-right:1px solid var(--border);padding:14px 12px;display:flex;flex-direction:column;gap:20px}
+.side-brand{display:flex;align-items:center;justify-content:space-between;height:32px;padding:0 6px}
+.nav-group{display:grid;gap:2px}
+.nav-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:0 10px 6px}
+.nav-item{display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:10px;color:var(--muted);font-weight:600}
+.nav-item:hover{background:var(--hover);color:var(--text)}
+.nav-item.active{background:linear-gradient(90deg,rgba(110,123,255,.22),rgba(110,123,255,.06));color:#fff;box-shadow:inset 0 0 0 1px rgba(110,123,255,.3)}
+.nav-item.active .ic{color:var(--p3)}
+.count{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:6px;background:rgba(248,113,113,.15);color:var(--danger);font:500 11px var(--mono);display:grid;place-items:center}
+.side-foot{margin-top:auto;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+.side-foot b{display:flex;align-items:center;gap:6px;color:var(--text);font-size:13px;margin-bottom:2px}
+.side-foot .ic{color:var(--success)}
+.collapsed .lbl,.collapsed .nav-label,.collapsed .count,.collapsed .side-foot,.collapsed .brand-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.collapsed .nav-item,.collapsed .side-brand{justify-content:center;padding:0}
+.topbar{grid-area:top;position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:0 20px 0 12px;background:rgba(9,11,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.icon-btn{position:relative;width:36px;height:36px;display:grid;place-items:center;border:0;background:none;border-radius:9px;color:var(--muted);cursor:pointer}
+.icon-btn:hover{background:var(--hover);color:var(--text)}
+.badge-dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 2px var(--bg),0 0 10px var(--cyan)}
+.crumbs{display:flex;align-items:center;gap:8px;color:var(--faint);font-size:13.5px}
+.crumbs b{color:var(--text)}
+.search{margin-left:auto;width:340px;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px 0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--faint)}
+.search:focus-within{border-color:var(--p5)}
+.search input{flex:1;border:0;outline:0;background:none;min-width:0}
+.search input::placeholder{color:var(--faint)}
+kbd{font:500 11px var(--mono);padding:2px 6px;border:1px solid var(--border-strong);border-radius:6px;color:var(--muted);background:var(--surface-2)}
+.tb-right{display:flex;align-items:center;gap:4px}
+.has-menu{position:relative}
+.user{display:flex;align-items:center;gap:8px;height:40px;padding:0 6px 0 4px;margin-left:4px;border:0;background:none;border-radius:10px;cursor:pointer}
+.user:hover{background:var(--hover)}
+.avatar{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:12px;background:linear-gradient(135deg,#6E7BFF,#3DD6D0);color:#0B0E14}
+.menu{display:none;position:absolute;right:0;top:calc(100% + 8px);width:252px;background:var(--surface-2);border:1px solid var(--border-strong);border-radius:14px;box-shadow:0 24px 60px -12px rgba(0,0,0,.7);padding:6px;z-index:40}
+.has-menu.open .menu{display:block}
+.menu-head{padding:10px 10px 12px;display:grid;border-bottom:1px solid var(--border);margin-bottom:6px}
+.menu-head small{color:var(--muted)}
+.menu a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;color:var(--text);font-weight:600}
+.menu a:hover{background:var(--hover)}
+.menu .ic{color:var(--muted)}
+.tag-on{margin-left:auto;font:500 11px var(--mono);color:var(--success)}
+.menu hr{border:0;border-top:1px solid var(--border);margin:6px 0}
+
+.content{grid-area:main;padding:28px 28px 96px;min-width:0}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.eyebrow{font:500 12px var(--mono);color:var(--faint)}
+.page-head h1{font-size:28px;font-weight:800;letter-spacing:-.025em;margin-top:4px}
+.page-head h1 span{background:linear-gradient(90deg,#B8BFFF,#3DD6D0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.actions{display:flex;gap:8px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.kpi{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:grid;gap:4px}
+.kpi-label{font-size:12.5px;color:var(--muted);font-weight:600}
+.kpi-value{font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1.15;font-variant-numeric:tabular-nums}
+.kpi-value small{font-size:16px;color:var(--faint);font-weight:700}
+.kpi-sub{font-size:12.5px;color:var(--faint)}
+.kpi svg.spark{position:absolute;right:14px;top:44px;width:84px;height:34px}
+.kpi-warn .kpi-value{color:var(--danger)}
+.grid2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:18px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
+.card-head h2{font-size:14.5px;font-weight:800}
+.card-head a{font-size:13px}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:10px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:12px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover{background:var(--surface-2)}
+.tbl td small{display:block;color:var(--faint);font-size:12px}
+.tbl td:first-child b{font:500 13px var(--mono)}
+.prog-cell{display:flex;align-items:center;gap:10px}
+.prog{width:84px;height:6px;border-radius:3px;background:#1F2430;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#6E7BFF,#3DD6D0)}
+.prog-cell span{font:400 12px var(--mono);color:var(--muted);width:36px}
+.badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:7px;font-size:12px;font-weight:700}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.badge.reserved{color:var(--reserved);background:var(--reserved-bg)}
+.badge.confirmed{color:var(--confirmed);background:var(--confirmed-bg)}
+.badge.live{color:var(--live);background:var(--live-bg)}
+.feed{list-style:none;margin:0;padding:8px 0;position:relative}
+.feed li{position:relative;display:grid;grid-template-columns:28px 1fr;gap:12px;padding:10px 18px}
+.feed li::before{content:"";position:absolute;left:31px;top:38px;bottom:-10px;width:1px;background:var(--border)}
+.feed li:last-child::before{display:none}
+.who{position:relative;z-index:1;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:10.5px;font-weight:800;background:var(--surface-2);border:1px solid var(--border-strong);color:var(--muted)}
+.feed p{font-size:13.5px;color:#C9CEDA}
+.feed b{color:var(--text);font-weight:700}
+.feed .meta{font:400 11.5px var(--mono);color:var(--faint);margin-top:3px}
+
+/* ---------- Style guide ---------- */
+.guide{max-width:1120px;margin:0 auto;padding:48px 28px 120px}
+.g-head{margin-bottom:40px}
+.g-head h1{font-size:42px;font-weight:800;letter-spacing:-.03em;margin:8px 0 10px}
+.g-head p{color:var(--muted);max-width:720px;font-size:15.5px}
+.g-sec{margin-bottom:44px}
+.g-sec>h2{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.scale div{height:84px;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;font:400 11.5px var(--mono);color:#0B0E14}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)}
+.sw span{display:block;height:60px;border-bottom:1px solid var(--border)}
+.sw div{padding:10px 12px;display:grid;font-size:12.5px}
+.sw code{font:400 11.5px var(--mono);color:var(--muted)}
+.type{background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.type-row{display:grid;grid-template-columns:210px 1fr;gap:16px;align-items:baseline;padding:16px 20px;border-bottom:1px solid var(--border)}
+.type-row:last-child{border-bottom:0}
+.type-row code{font:400 11.5px var(--mono);color:var(--faint)}
+.comp{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+pre{margin:0;background:#06070A;border:1px solid var(--border);color:#C9CEDA;border-radius:14px;padding:20px;font:400 12.5px/1.7 var(--mono);overflow:auto}
+
+@media (max-width:1240px){.grid2{grid-template-columns:1fr}}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+  .shell,.shell.collapsed{grid-template-columns:1fr;grid-template-areas:"top" "main"}
+  .sidebar{display:none}
+  .shell.nav-open .sidebar{display:flex;position:fixed;left:0;top:0;width:264px;z-index:30;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  .search,.crumbs{display:none}.tb-right{margin-left:auto}
+  .content{padding:20px 16px 96px}
+  .scale{grid-template-columns:repeat(5,1fr)}.type-row{grid-template-columns:1fr}
+  .glass{padding:24px}
+}
+@media (max-width:560px){.kpis{grid-template-columns:1fr}}
+
+/* ---------- Mockup switcher (not part of the design) ---------- */
+.mk{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:999;display:flex;gap:2px;align-items:center;padding:5px;background:rgba(40,40,40,.92);border:1px solid #3a3a3a;border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.4);font:500 12.5px/1 system-ui,sans-serif;max-width:calc(100vw - 24px);overflow-x:auto}
+.mk a,.mk button{all:unset;cursor:pointer;color:#cfcfcf;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.mk a:hover,.mk button:hover{color:#fff}
+.mk button.on{background:#fff;color:#111}
+.mk a:focus-visible,.mk button:focus-visible{outline:2px solid #fff}
+.mk-name{color:#fff;font-weight:650;padding:0 10px 0 12px;border-right:1px solid #555;margin-right:4px;white-space:nowrap}
+.embed .mk{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-tasks" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></symbol>
+<symbol id="i-shieldok" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+<symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+</svg>
+
+<!-- ================= LOGIN + MFA ================= -->
+<div class="auth" data-show="login error mfa">
+  <div class="auth-col">
+    <div class="auth-top">
+      <a class="brand" href="#"><span class="logo"><span></span></span>Onboarding Portal</a>
+      <span class="chip"><svg class="ic sm"><use href="#i-lock"/></svg>Encrypted connection</span>
+    </div>
+    <div class="glass">
+      <form class="login-form" data-next="mfa" data-show="login error" novalidate>
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in with your work email. Accounts are created by invitation.</p>
+        <div class="alert" role="alert" data-show="error"><svg class="ic"><use href="#i-alert"/></svg><div><b>Email or password is incorrect.</b>Check them and try again. Repeated failures pause sign-in for 15 minutes.</div></div>
+        <div class="field"><label for="email">Work email</label><div class="control"><svg class="ic"><use href="#i-mail"/></svg><input id="email" type="email" autocomplete="username" placeholder="name@company.com"></div></div>
+        <div class="field"><div class="label-row"><label for="pw">Password</label><a href="#">Forgot password?</a></div><div class="control"><svg class="ic"><use href="#i-lock"/></svg><input id="pw" type="password" autocomplete="current-password" placeholder="••••••••••••"><button type="button" class="pw-btn" data-pw aria-label="Show password" aria-pressed="false"><svg class="ic"><use href="#i-eye"/></svg></button></div></div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in<svg class="ic"><use href="#i-right"/></svg></button>
+        <div class="divider"></div>
+        <p class="secure-note"><svg class="ic sm"><use href="#i-shield"/></svg>Authorised users only. Sign-in activity is recorded.</p>
+      </form>
+
+      <form class="login-form" data-next="app" data-show="mfa" novalidate>
+        <a class="back" href="#" data-go="login"><svg class="ic sm"><use href="#i-left"/></svg>Back</a>
+        <span class="mfa-icon"><svg class="ic"><use href="#i-phone"/></svg></span>
+        <h2>Two-step verification</h2>
+        <p class="sub">Enter the 6-digit code from your authenticator app for <b style="color:var(--text)">alex.morgan@example.com</b>.</p>
+        <div class="field"><label for="otp">Authentication code</label><input id="otp" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+        <button class="btn btn-primary btn-block" type="submit">Verify and continue</button>
+        <p class="alt-link">Lost your device? <a href="#">Use a recovery code</a></p>
+      </form>
+    </div>
+    <p class="auth-foot">Need access? Ask your portal administrator for an invitation.</p>
+  </div>
+</div>
+
+<!-- ================= APP SHELL ================= -->
+<div class="shell" data-show="app">
+  <nav class="sidebar" aria-label="Main">
+    <div class="side-brand"><a class="brand" href="#"><span class="logo"><span></span></span><span class="brand-name">Onboarding Portal</span></a></div>
+    <div class="nav-group">
+      <a class="nav-item active" href="#" aria-current="page"><svg class="ic"><use href="#i-grid"/></svg><span class="lbl">Overview</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-cal"/></svg><span class="lbl">Go-live calendar</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-building"/></svg><span class="lbl">Practices</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-db"/></svg><span class="lbl">Migrations</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-tasks"/></svg><span class="lbl">Tasks</span><span class="count">4</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-layers"/></svg><span class="lbl">Templates</span></a>
+    </div>
+    <div class="nav-group">
+      <p class="nav-label">Records</p>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-history"/></svg><span class="lbl">Audit log</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chart"/></svg><span class="lbl">Reports</span></a>
+    </div>
+    <div class="nav-group">
+      <p class="nav-label">Administration</p>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Users &amp; roles</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-shield"/></svg><span class="lbl">IP rules</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+    </div>
+    <div class="side-foot"><b><svg class="ic sm"><use href="#i-shieldok"/></svg>Two-step sign-in on</b>Times shown in NZ time</div>
+  </nav>
+
+  <header class="topbar">
+    <button class="icon-btn" type="button" data-nav aria-label="Toggle navigation"><svg class="ic"><use href="#i-panel"/></svg></button>
+    <div class="crumbs"><span>Workspace</span><svg class="ic sm"><use href="#i-chev"/></svg><b>Overview</b></div>
+    <label class="search"><svg class="ic sm"><use href="#i-search"/></svg><input type="search" placeholder="Jump to practice, task…" aria-label="Search"><kbd>Ctrl K</kbd></label>
+    <div class="tb-right">
+      <button class="icon-btn" type="button" aria-label="Help"><svg class="ic"><use href="#i-help"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Notifications, 3 unread"><svg class="ic"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
+      <div class="has-menu">
+        <button class="user" type="button" data-menu aria-haspopup="menu" aria-expanded="false" aria-label="Account: Alex Morgan"><span class="avatar">AM</span><svg class="ic sm"><use href="#i-down"/></svg></button>
+        <div class="menu" role="menu">
+          <div class="menu-head"><b>Alex Morgan</b><small>Onboarding team · alex.morgan@example.com</small></div>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-user"/></svg>Profile</a>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-shieldok"/></svg>Two-step sign-in<span class="tag-on">ON</span></a>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-lock"/></svg>Sign out everywhere</a>
+          <hr>
+          <a role="menuitem" href="#" data-go="login"><svg class="ic"><use href="#i-logout"/></svg>Sign out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">WED 28 OCT 2026 · NZDT</p>
+        <h1>Good morning, <span>Alex</span></h1>
+      </div>
+      <div class="actions">
+        <button class="btn btn-default" type="button"><svg class="ic"><use href="#i-cal"/></svg>Open calendar</button>
+        <button class="btn btn-primary" type="button"><svg class="ic"><use href="#i-plus"/></svg>Reserve go-live</button>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span class="kpi-label">Go-lives in November</span><span class="kpi-value">5</span><span class="kpi-sub">2 confirmed · 3 reserved</span>
+        <svg class="spark" viewBox="0 0 84 34" aria-hidden="true"><path d="M0 28 L14 24 L28 26 L42 16 L56 18 L70 8 L84 10" fill="none" stroke="#6E7BFF" stroke-width="2"/></svg></div>
+      <div class="kpi"><span class="kpi-label">Configuration on track</span><span class="kpi-value">4<small> / 5</small></span><span class="kpi-sub">Kauri Hills is behind plan</span>
+        <svg class="spark" viewBox="0 0 84 34" aria-hidden="true"><path d="M0 20 L14 18 L28 22 L42 14 L56 12 L70 14 L84 6" fill="none" stroke="#3DD6D0" stroke-width="2"/></svg></div>
+      <div class="kpi"><span class="kpi-label">Migrations in progress</span><span class="kpi-value">3</span><span class="kpi-sub">1 waiting for DB extract 2</span></div>
+      <div class="kpi kpi-warn"><span class="kpi-label">Overdue tasks</span><span class="kpi-value">4</span><span class="kpi-sub">2 assigned to you</span></div>
+    </div>
+    <div class="grid2">
+      <section class="card">
+        <header class="card-head"><h2>Go-lives · next five weeks</h2><a href="#">Open calendar</a></header>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th scope="col">Go-live</th><th scope="col">Practice</th><th scope="col">Configuration</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Tue 27 Oct</b><small>Moved from Labour Day</small></td><td>Pinewood Surgery<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:100%"></i></div><span>100%</span></div></td><td><span class="badge live">Live</span></td></tr>
+            <tr><td><b>Mon 02 Nov</b><small>in 5 days</small></td><td>Harbourside Medical Centre<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:96%"></i></div><span>96%</span></div></td><td><span class="badge confirmed">Confirmed</span></td></tr>
+            <tr><td><b>Mon 09 Nov</b><small>in 12 days</small></td><td>Tōtara Street Clinic<small>Non-migration · NZ-1</small></td><td><div class="prog-cell"><div class="prog"><i style="width:74%"></i></div><span>74%</span></div></td><td><span class="badge confirmed">Confirmed</span></td></tr>
+            <tr><td><b>Mon 16 Nov</b><small>in 19 days</small></td><td>Riverbend Family Doctors<small>Migration · NZ-3</small></td><td><div class="prog-cell"><div class="prog"><i style="width:41%"></i></div><span>41%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+            <tr><td><b>Mon 23 Nov</b><small>in 26 days</small></td><td>Kauri Hills Medical<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:18%"></i></div><span>18%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+            <tr><td><b>Mon 30 Nov</b><small>in 33 days</small></td><td>Seaview Health Hub<small>Non-migration · NZ-1</small></td><td><div class="prog-cell"><div class="prog"><i style="width:5%"></i></div><span>5%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+      <section class="card">
+        <header class="card-head"><h2>Recent activity</h2><a href="#">Audit log</a></header>
+        <ol class="feed">
+          <li><span class="who">PN</span><div><p><b>Priya N.</b> ticked <b>Mail merge templates</b></p><p class="meta">Harbourside Medical Centre · 10:42</p></div></li>
+          <li><span class="who">TW</span><div><p><b>Tom W.</b> logged <b>DB extract 2</b> as received, on time</p><p class="meta">Kauri Hills Medical · 09:15</p></div></li>
+          <li><span class="who">MT</span><div><p><b>Mere T.</b> finished migration step <b>Profile conversion</b></p><p class="meta">Riverbend Family Doctors · yest 18:03</p></div></li>
+          <li><span class="who">AM</span><div><p><b>You</b> marked <b>Pinewood Surgery</b> as live</p><p class="meta">Tue 27 Oct · 08:30</p></div></li>
+          <li><span class="who">SJ</span><div><p><b>Sam J.</b> reserved <b>Mon 30 Nov</b></p><p class="meta">Seaview Health Hub · Mon 26 Oct 14:20</p></div></li>
+        </ol>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ================= STYLE GUIDE ================= -->
+<div class="guide" data-show="guide">
+  <header class="g-head">
+    <p class="eyebrow">DESIGN 03 · MIDNIGHT</p>
+    <h1>Dark, focused, developer-grade.</h1>
+    <p>Near-black surfaces, an indigo primary and a cyan secondary used for progress and live signals. Full-height sidebar holds the brand; the top bar carries breadcrumbs and a command-style search. Suits teams who live in dark IDEs and dashboards. A light variant would need its own pass.</p>
+  </header>
+
+  <section class="g-sec"><h2>Primary · Indigo (shade 5 on dark)</h2>
+    <div class="scale">
+      <div style="background:#EEF0FF">0<br>#EEF0FF</div><div style="background:#DADEFF">1<br>#DADEFF</div><div style="background:#B8BFFF">2<br>#B8BFFF</div><div style="background:#959FFF">3<br>#959FFF</div><div style="background:#7B87FF">4<br>#7B87FF</div>
+      <div style="background:#6E7BFF">5 ★<br>#6E7BFF</div><div style="background:#5A66E8;color:#fff">6<br>#5A66E8</div><div style="background:#4851C4;color:#fff">7<br>#4851C4</div><div style="background:#383F9C;color:#fff">8<br>#383F9C</div><div style="background:#2A2F74;color:#fff">9<br>#2A2F74</div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Surfaces &amp; text</h2>
+    <div class="swatches">
+      <div class="sw"><span style="background:#090B10"></span><div><b>Background</b><code>#090B10</code></div></div>
+      <div class="sw"><span style="background:#0D1016"></span><div><b>Sidebar</b><code>#0D1016</code></div></div>
+      <div class="sw"><span style="background:#12151C"></span><div><b>Surface</b><code>#12151C</code></div></div>
+      <div class="sw"><span style="background:#222734"></span><div><b>Border</b><code>#222734</code></div></div>
+      <div class="sw"><span style="background:#E7E9EF"></span><div><b>Text</b><code>#E7E9EF</code></div></div>
+      <div class="sw"><span style="background:#9AA2B5"></span><div><b>Muted</b><code>#9AA2B5</code></div></div>
+      <div class="sw"><span style="background:#3DD6D0"></span><div><b>Cyan</b><code>#3DD6D0</code></div></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Semantic &amp; go-live status</h2>
+    <div class="swatches">
+      <div class="sw"><span style="background:#34D399"></span><div><b>Success</b><code>#34D399</code></div></div>
+      <div class="sw"><span style="background:#F5B84B"></span><div><b>Warning</b><code>#F5B84B</code></div></div>
+      <div class="sw"><span style="background:#F87171"></span><div><b>Danger</b><code>#F87171</code></div></div>
+      <div class="sw"><span style="background:#60A5FA"></span><div><b>Info</b><code>#60A5FA</code></div></div>
+    </div>
+    <div class="comp" style="margin-top:12px"><span class="badge reserved">Reserved</span><span class="badge confirmed">Confirmed</span><span class="badge live">Live</span></div>
+  </section>
+
+  <section class="g-sec"><h2>Typography · Manrope + JetBrains Mono</h2>
+    <div class="type">
+      <div class="type-row"><code>Display · 42 · 800</code><span style="font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.1">Welcome back</span></div>
+      <div class="type-row"><code>H1 · 28 · 800</code><span style="font-size:28px;font-weight:800;letter-spacing:-.025em">Good morning, Alex</span></div>
+      <div class="type-row"><code>H2 · 14.5 · 800</code><span style="font-size:14.5px;font-weight:800">Go-lives · next five weeks</span></div>
+      <div class="type-row"><code>Body · 14 · 500</code><span>Priya N. ticked Mail merge templates for Harbourside Medical Centre.</span></div>
+      <div class="type-row"><code>Overline · 11.5 · 700 caps</code><span style="font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Configuration</span></div>
+      <div class="type-row"><code>Mono · 13 · 400</code><span style="font:400 13px var(--mono)">Mon 02 Nov · ref 7f3a9c1e</span></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Components</h2>
+    <div class="comp">
+      <button class="btn btn-primary" type="button">Primary</button>
+      <button class="btn btn-default" type="button">Default</button>
+      <button class="btn btn-subtle" type="button">Subtle</button>
+      <button class="btn btn-danger" type="button">Archive</button>
+      <div class="control" style="width:250px"><svg class="ic"><use href="#i-search"/></svg><input placeholder="Text input" aria-label="Example input"></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Mantine theme sketch</h2>
+<pre>// &lt;MantineProvider defaultColorScheme="dark"&gt;
+createTheme({
+  primaryColor: 'indigo',
+  primaryShade: { light: 6, dark: 5 },
+  colors: {
+    indigo: ['#EEF0FF','#DADEFF','#B8BFFF','#959FFF','#7B87FF',
+             '#6E7BFF','#5A66E8','#4851C4','#383F9C','#2A2F74'],
+    dark:   ['#E7E9EF','#9AA2B5','#6D7489','#2F3546','#222734',
+             '#181C25','#12151C','#0D1016','#090B10','#06070A'],
+  },
+  fontFamily: 'Manrope, system-ui, sans-serif',
+  fontFamilyMonospace: 'JetBrains Mono, Consolas, monospace',
+  defaultRadius: 'md',            // 10px
+})
+// AppShell: navbar 256 full height (brand inside), header 60 over main only</pre>
+  </section>
+</div>
+
+<nav class="mk" aria-label="Mockup screens">
+  <span class="mk-name">03 Midnight</span>
+  <a href="index.html">All designs</a>
+  <button type="button" data-go="login">Login</button>
+  <button type="button" data-go="error">Login error</button>
+  <button type="button" data-go="mfa">MFA</button>
+  <button type="button" data-go="app">App shell</button>
+  <button type="button" data-go="guide">Style guide</button>
+</nav>
+
+<script>
+(function(){
+  if(window.self!==window.top)document.documentElement.classList.add('embed');
+  var ids=['login','error','mfa','app','guide'];
+  function show(id){
+    if(ids.indexOf(id)<0)id='login';
+    document.querySelectorAll('[data-show]').forEach(function(el){el.hidden=el.getAttribute('data-show').split(' ').indexOf(id)<0;});
+    document.querySelectorAll('.mk [data-go]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-go')===id);});
+    history.replaceState(null,'','#'+id);
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');
+    if(go){e.preventDefault();show(go.getAttribute('data-go'));}
+    else if(e.target.closest('a[href="#"]'))e.preventDefault();
+    var pw=e.target.closest('[data-pw]');
+    if(pw){var inp=pw.parentElement.querySelector('input');var vis=inp.type==='text';inp.type=vis?'password':'text';pw.setAttribute('aria-pressed',String(!vis));pw.setAttribute('aria-label',vis?'Show password':'Hide password');}
+    if(e.target.closest('[data-nav]')){var s=document.querySelector('.shell');s.classList.toggle(window.innerWidth<900?'nav-open':'collapsed');}
+    var menu=e.target.closest('[data-menu]');
+    document.querySelectorAll('.has-menu.open').forEach(function(m){if(!menu||m!==menu.parentElement){m.classList.remove('open');m.querySelector('[data-menu]').setAttribute('aria-expanded','false');}});
+    if(menu){var p=menu.parentElement;p.classList.toggle('open');menu.setAttribute('aria-expanded',String(p.classList.contains('open')));}
+  });
+  document.addEventListener('submit',function(e){e.preventDefault();show(e.target.getAttribute('data-next'));});
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1));});
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>

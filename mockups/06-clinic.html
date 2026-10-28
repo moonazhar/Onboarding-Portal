@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>06 Clinic · Onboarding Portal mockup</title>
+<!-- Mockup only. The real app must self-host fonts (frontend.md §8: no CDN). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p0:#E7F2FC;--p1:#C6E0F8;--p2:#9DCAF2;--p3:#6FB0EA;--p4:#4497E0;--p5:#1F80D6;--p6:#0B6BCB;--p7:#0957A6;--p8:#074482;--p9:#05315E;
+  --primary:var(--p6);--primary-hover:var(--p7);--primary-soft:var(--p0);
+  --mint:#0FA898;--mint-soft:#DDF6F2;
+  --bg:#F2F5F9;--surface:#FFFFFF;--hover:#EEF2F7;--border:#E2E8F0;--border-strong:#CDD6E1;
+  --text:#0D1B2A;--muted:#55667A;--faint:#8494A7;
+  --success:#0E7E6F;--warning:#A3650B;--danger:#C0362C;--info:#0B6BCB;
+  --reserved:#935B07;--reserved-bg:#FEF1DC;--confirmed:#0957A6;--confirmed-bg:#E1EEFB;--live:#0B7466;--live-bg:#DDF6F2;
+  --shadow:0 1px 2px rgba(13,27,42,.04),0 4px 16px -4px rgba(13,27,42,.06);
+  --shadow-lg:0 24px 60px -16px rgba(13,27,42,.18);
+  --font:'Figtree',system-ui,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:400 14.5px/1.5 var(--font);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+h1,h2,h3,p{margin:0}
+button,input{font:inherit;color:inherit}
+a{color:var(--primary);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--p2);outline-offset:2px}
+.ic{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:16px;height:16px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:12px;border:1px solid transparent;font-weight:700;font-size:14px;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px -6px rgba(11,107,203,.55)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-default{background:var(--surface);border-color:var(--border-strong);color:var(--text)}
+.btn-default:hover{background:var(--hover)}
+.btn-subtle{background:var(--primary-soft);color:var(--p7)}
+.btn-subtle:hover{background:var(--p1)}
+.btn-danger{background:#FDECEA;color:var(--danger)}
+.btn-block{width:100%;height:48px;font-size:15.5px;border-radius:14px}
+.field{display:grid;gap:7px}
+.field label{font-weight:600;font-size:13.5px}
+.label-row{display:flex;justify-content:space-between;align-items:baseline}
+.label-row a{font-size:13.5px}
+.control{position:relative;display:flex;align-items:center}
+.control>.ic{position:absolute;left:14px;color:var(--faint);pointer-events:none}
+.control input{width:100%;height:48px;padding:0 46px 0 44px;border:1px solid var(--border-strong);border-radius:14px;background:#FAFCFE;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.control input:focus{border-color:var(--primary);background:var(--surface);box-shadow:0 0 0 4px rgba(11,107,203,.14)}
+.pw-btn{position:absolute;right:7px;width:34px;height:34px;display:grid;place-items:center;border:0;background:none;border-radius:10px;color:var(--faint);cursor:pointer}
+.pw-btn:hover{background:var(--hover);color:var(--text)}
+
+/* ---------- Auth ---------- */
+.auth{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(180deg,#EAF3FD 0%,#F6F9FC 55%,#F2F5F9 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none}
+.blob.a{width:460px;height:460px;left:-120px;top:-140px;background:#BFDDFB}
+.blob.b{width:380px;height:380px;right:-100px;top:120px;background:#C5F0E8}
+.auth-bar{position:relative;display:flex;justify-content:space-between;align-items:center;padding:22px 32px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:-.01em;color:var(--text)}
+.brand:hover{text-decoration:none}
+.logo{width:34px;height:34px;border-radius:11px;background:var(--primary);display:grid;place-items:center;color:#fff;position:relative}
+.logo::after{content:"";position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px #EAF3FD}
+.help-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);font-weight:600}
+.auth-center{position:relative;flex:1;display:grid;place-items:center;padding:24px 20px 110px}
+.card-auth{width:100%;max-width:440px;background:var(--surface);border-radius:24px;padding:36px;box-shadow:var(--shadow-lg);border:1px solid rgba(226,232,240,.8)}
+.login-form{display:grid;gap:20px}
+.form-top{text-align:center;display:grid;justify-items:center;gap:8px}
+.form-icon{width:56px;height:56px;border-radius:18px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;margin-bottom:4px}
+.form-icon .ic{width:26px;height:26px}
+.login-form h2{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:14.5px}
+.alert{display:flex;gap:10px;padding:13px 14px;border-radius:14px;background:#FDECEA;color:#7D1F17;font-size:13.5px}
+.alert .ic{margin-top:1px;color:var(--danger)}
+.alert b{display:block}
+.secure-note{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--faint);font-size:12.5px;background:var(--bg);border-radius:12px;padding:10px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);justify-self:start}
+.otp{height:60px;width:100%;border:1px solid var(--border-strong);border-radius:16px;background:#FAFCFE;text-align:center;font:500 28px var(--mono);letter-spacing:.55em;padding-left:.55em;outline:none}
+.otp:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 4px rgba(11,107,203,.14)}
+.alt-link{text-align:center;color:var(--muted);font-size:14px}
+.auth-foot{position:relative;text-align:center;font-size:12.5px;color:var(--faint);padding:0 20px 90px}
+
+/* ---------- App shell: floating inset sidebar ---------- */
+.shell{min-height:100vh;display:grid;grid-template-columns:268px minmax(0,1fr);grid-template-rows:72px 1fr;grid-template-areas:"side top" "side main"}
+.shell.collapsed{grid-template-columns:96px minmax(0,1fr)}
+.sidebar{grid-area:side;position:sticky;top:12px;margin:12px 0 12px 12px;height:calc(100vh - 24px);overflow:auto;background:var(--surface);border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--border);padding:18px 14px;display:flex;flex-direction:column;gap:20px}
+.sidebar .brand{padding:2px 8px 4px}
+.nav-group{display:grid;gap:3px}
+.nav-label{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);padding:0 12px 6px}
+.nav-item{display:flex;align-items:center;gap:12px;height:42px;padding:0 12px;border-radius:12px;color:var(--muted);font-weight:600}
+.nav-item:hover{background:var(--hover);color:var(--text);text-decoration:none}
+.nav-item.active{background:var(--primary);color:#fff;box-shadow:0 8px 18px -8px rgba(11,107,203,.6)}
+.count{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:8px;background:#FDECEA;color:var(--danger);font-size:12px;font-weight:800;display:grid;place-items:center}
+.side-foot{margin-top:auto;padding:14px;border-radius:16px;background:var(--mint-soft);font-size:12.5px;color:#245A53}
+.side-foot b{display:flex;align-items:center;gap:6px;font-size:13px;color:#0B5B51;margin-bottom:2px}
+.collapsed .lbl,.collapsed .nav-label,.collapsed .count,.collapsed .side-foot,.collapsed .brand-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.collapsed .nav-item,.collapsed .sidebar .brand{justify-content:center;padding:0}
+.topbar{grid-area:top;position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:0 24px 0 16px;background:rgba(242,245,249,.85);backdrop-filter:blur(10px)}
+.icon-btn{position:relative;width:42px;height:42px;display:grid;place-items:center;border:0;background:var(--surface);border-radius:13px;color:var(--muted);cursor:pointer;box-shadow:var(--shadow)}
+.icon-btn:hover{color:var(--text)}
+.icon-btn.plain{background:none;box-shadow:none}
+.icon-btn.plain:hover{background:var(--hover)}
+.badge-dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 0 2px var(--surface)}
+.search{flex:1;max-width:520px;display:flex;align-items:center;gap:10px;height:44px;padding:0 10px 0 14px;border-radius:14px;background:var(--surface);box-shadow:var(--shadow);color:var(--faint);border:1px solid transparent}
+.search:focus-within{border-color:var(--p2)}
+.search input{flex:1;border:0;outline:0;background:none;min-width:0}
+kbd{font:500 11px var(--mono);padding:3px 7px;border-radius:7px;color:var(--muted);background:var(--bg)}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.has-menu{position:relative}
+.user{display:flex;align-items:center;gap:10px;height:46px;padding:0 12px 0 5px;border:0;background:var(--surface);border-radius:14px;cursor:pointer;text-align:left;box-shadow:var(--shadow)}
+.avatar{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--mint-soft);color:#0B5B51}
+.u-meta{display:grid;line-height:1.2}
+.u-meta b{font-size:13.5px}
+.u-meta small{font-size:12px;color:var(--muted)}
+.menu{display:none;position:absolute;right:0;top:calc(100% + 8px);width:256px;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-lg);padding:8px;z-index:40}
+.has-menu.open .menu{display:block}
+.menu-head{padding:10px 12px 12px;display:grid;border-bottom:1px solid var(--border);margin-bottom:6px}
+.menu-head small{color:var(--muted)}
+.menu a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;color:var(--text);font-weight:600}
+.menu a:hover{background:var(--hover);text-decoration:none}
+.menu .ic{color:var(--muted)}
+.tag-on{margin-left:auto;font-size:11px;font-weight:800;color:var(--live);background:var(--live-bg);padding:2px 8px;border-radius:7px}
+.menu hr{border:0;border-top:1px solid var(--border);margin:6px 0}
+
+.content{grid-area:main;padding:12px 24px 100px;min-width:0}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted)}
+.page-head h1{font-size:30px;font-weight:800;letter-spacing:-.025em;margin-top:2px}
+.actions{display:flex;gap:8px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.kpi{background:var(--surface);border-radius:20px;padding:18px;display:grid;grid-template-columns:44px 1fr;column-gap:14px;row-gap:2px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.kpi-ic{grid-row:span 3;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary)}
+.kpi:nth-child(2) .kpi-ic{background:var(--mint-soft);color:var(--success)}
+.kpi:nth-child(3) .kpi-ic{background:#EFE9FD;color:#6941C6}
+.kpi-warn .kpi-ic{background:#FDECEA;color:var(--danger)}
+.kpi-label{font-size:13px;color:var(--muted);font-weight:600}
+.kpi-value{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.15;font-variant-numeric:tabular-nums}
+.kpi-value small{font-size:16px;color:var(--faint)}
+.kpi-sub{font-size:12.5px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px;align-items:start}
+.card{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 10px}
+.card-head h2{font-size:16px;font-weight:800}
+.card-head a{font-size:13.5px}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--faint);padding:10px 20px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:13px 20px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover{background:#F8FAFD}
+.tbl td small{display:block;color:var(--faint);font-size:12.5px}
+.tbl td b{font-weight:700}
+.prog-cell{display:flex;align-items:center;gap:10px}
+.prog{width:84px;height:8px;border-radius:4px;background:var(--hover);overflow:hidden}
+.prog i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p5),var(--mint))}
+.prog-cell span{font-size:12.5px;font-weight:600;color:var(--muted);width:36px;font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:9px;font-size:12.5px;font-weight:700}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.badge.reserved{color:var(--reserved);background:var(--reserved-bg)}
+.badge.confirmed{color:var(--confirmed);background:var(--confirmed-bg)}
+.badge.live{color:var(--live);background:var(--live-bg)}
+.feed{list-style:none;margin:0;padding:0 8px 10px}
+.feed li{display:grid;grid-template-columns:38px 1fr;gap:12px;padding:10px 12px;border-radius:14px}
+.feed li:hover{background:var(--hover)}
+.who{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--primary-soft);color:var(--p7)}
+.feed li:nth-child(even) .who{background:var(--mint-soft);color:#0B5B51}
+.feed p{font-size:14px}
+.feed b{font-weight:700}
+.feed .meta{font-size:12.5px;color:var(--faint);margin-top:2px}
+
+/* ---------- Style guide ---------- */
+.guide{max-width:1120px;margin:0 auto;padding:48px 28px 120px}
+.g-head{margin-bottom:40px}
+.g-head h1{font-size:44px;font-weight:800;letter-spacing:-.03em;margin:6px 0 10px}
+.g-head p{color:var(--muted);max-width:720px;font-size:16px}
+.g-sec{margin-bottom:44px}
+.g-sec>h2{font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.scale div{height:88px;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;font:400 11.5px var(--mono)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--border)}
+.sw span{display:block;height:62px}
+.sw div{padding:10px 14px;display:grid;font-size:13px}
+.sw code{font:400 11.5px var(--mono);color:var(--muted)}
+.type{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.type-row{display:grid;grid-template-columns:210px 1fr;gap:16px;align-items:baseline;padding:16px 22px;border-bottom:1px solid var(--border)}
+.type-row:last-child{border-bottom:0}
+.type-row code{font:400 11.5px var(--mono);color:var(--muted)}
+.comp{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--surface);border-radius:20px;padding:22px;box-shadow:var(--shadow);border:1px solid var(--border)}
+pre{margin:0;background:var(--p9);color:#D6E7F8;border-radius:20px;padding:22px;font:400 12.5px/1.7 var(--mono);overflow:auto}
+
+@media (max-width:1240px){.grid2{grid-template-columns:1fr}}
+@media (max-width:1200px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+  .shell,.shell.collapsed{grid-template-columns:1fr;grid-template-areas:"top" "main"}
+  .sidebar{display:none}
+  .shell.nav-open .sidebar{display:flex;position:fixed;left:0;top:0;width:272px;z-index:30;box-shadow:var(--shadow-lg)}
+  .search,.u-meta{display:none}
+  .content{padding:8px 16px 100px}.topbar{padding:0 16px}
+  .scale{grid-template-columns:repeat(5,1fr)}.type-row{grid-template-columns:1fr}
+  .card-auth{padding:26px 22px}.auth-bar{padding:18px 20px}
+}
+@media (max-width:560px){.kpis{grid-template-columns:1fr}}
+
+/* ---------- Mockup switcher (not part of the design) ---------- */
+.mk{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:999;display:flex;gap:2px;align-items:center;padding:5px;background:rgba(17,17,17,.92);border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.25);font:500 12.5px/1 system-ui,sans-serif;max-width:calc(100vw - 24px);overflow-x:auto}
+.mk a,.mk button{all:unset;cursor:pointer;color:#cfcfcf;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.mk a:hover,.mk button:hover{color:#fff;text-decoration:none}
+.mk button.on{background:#fff;color:#111}
+.mk a:focus-visible,.mk button:focus-visible{outline:2px solid #fff}
+.mk-name{color:#fff;font-weight:650;padding:0 10px 0 12px;border-right:1px solid #444;margin-right:4px;white-space:nowrap}
+.embed .mk{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-tasks" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></symbol>
+<symbol id="i-shieldok" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+<symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+</svg>
+
+<!-- ================= LOGIN + MFA ================= -->
+<div class="auth" data-show="login error mfa">
+  <span class="blob a"></span><span class="blob b"></span>
+  <div class="auth-bar">
+    <a class="brand" href="#"><span class="logo"><svg class="ic sm" style="stroke-width:2.6"><use href="#i-pulse"/></svg></span>Onboarding Portal</a>
+    <a class="help-link" href="#"><svg class="ic sm"><use href="#i-help"/></svg>Help</a>
+  </div>
+  <div class="auth-center">
+    <div class="card-auth">
+      <form class="login-form" data-next="mfa" data-show="login error" novalidate>
+        <div class="form-top">
+          <span class="form-icon"><svg class="ic"><use href="#i-lock"/></svg></span>
+          <h2>Sign in to your account</h2>
+          <p class="sub">Use your work email. Accounts are created by invitation.</p>
+        </div>
+        <div class="alert" role="alert" data-show="error"><svg class="ic"><use href="#i-alert"/></svg><div><b>Email or password is incorrect.</b>Check them and try again. Repeated failures pause sign-in for 15 minutes.</div></div>
+        <div class="field"><label for="email">Work email</label><div class="control"><svg class="ic"><use href="#i-mail"/></svg><input id="email" type="email" autocomplete="username" placeholder="name@company.com"></div></div>
+        <div class="field"><div class="label-row"><label for="pw">Password</label><a href="#">Forgot password?</a></div><div class="control"><svg class="ic"><use href="#i-lock"/></svg><input id="pw" type="password" autocomplete="current-password"><button type="button" class="pw-btn" data-pw aria-label="Show password" aria-pressed="false"><svg class="ic"><use href="#i-eye"/></svg></button></div></div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        <p class="secure-note"><svg class="ic sm"><use href="#i-shieldok"/></svg>Authorised users only. Sign-in activity is recorded.</p>
+      </form>
+
+      <form class="login-form" data-next="app" data-show="mfa" novalidate>
+        <a class="back" href="#" data-go="login"><svg class="ic sm"><use href="#i-left"/></svg>Back</a>
+        <div class="form-top">
+          <span class="form-icon"><svg class="ic"><use href="#i-phone"/></svg></span>
+          <h2>Check your authenticator</h2>
+          <p class="sub">Enter the 6-digit code for <b>alex.morgan@example.com</b>.</p>
+        </div>
+        <div class="field"><label for="otp">Authentication code</label><input id="otp" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+        <button class="btn btn-primary btn-block" type="submit">Verify and continue</button>
+        <p class="alt-link">Lost your device? <a href="#">Use a recovery code</a></p>
+      </form>
+    </div>
+  </div>
+  <p class="auth-foot">Need access? Ask your portal administrator for an invitation.</p>
+</div>
+
+<!-- ================= APP SHELL ================= -->
+<div class="shell" data-show="app">
+  <nav class="sidebar" aria-label="Main">
+    <a class="brand" href="#"><span class="logo"><svg class="ic sm" style="stroke-width:2.6"><use href="#i-pulse"/></svg></span><span class="brand-name">Onboarding Portal</span></a>
+    <div class="nav-group">
+      <a class="nav-item active" href="#" aria-current="page"><svg class="ic"><use href="#i-grid"/></svg><span class="lbl">Overview</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-cal"/></svg><span class="lbl">Go-live calendar</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-building"/></svg><span class="lbl">Practices</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-db"/></svg><span class="lbl">Migrations</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-tasks"/></svg><span class="lbl">Tasks</span><span class="count">4</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-layers"/></svg><span class="lbl">Templates</span></a>
+    </div>
+    <div class="nav-group">
+      <p class="nav-label">Records</p>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-history"/></svg><span class="lbl">Audit log</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chart"/></svg><span class="lbl">Reports</span></a>
+    </div>
+    <div class="nav-group">
+      <p class="nav-label">Administration</p>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Users &amp; roles</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-shield"/></svg><span class="lbl">IP rules</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+    </div>
+    <div class="side-foot"><b><svg class="ic sm"><use href="#i-shieldok"/></svg>Two-step sign-in on</b>Times shown in NZ time</div>
+  </nav>
+
+  <header class="topbar">
+    <button class="icon-btn plain" type="button" data-nav aria-label="Toggle navigation"><svg class="ic"><use href="#i-panel"/></svg></button>
+    <label class="search"><svg class="ic sm"><use href="#i-search"/></svg><input type="search" placeholder="Search practices, tasks, people" aria-label="Search"><kbd>Ctrl K</kbd></label>
+    <div class="tb-right">
+      <button class="icon-btn" type="button" aria-label="Help"><svg class="ic"><use href="#i-help"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Notifications, 3 unread"><svg class="ic"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
+      <div class="has-menu">
+        <button class="user" type="button" data-menu aria-haspopup="menu" aria-expanded="false"><span class="avatar">AM</span><span class="u-meta"><b>Alex Morgan</b><small>Onboarding team</small></span><svg class="ic sm"><use href="#i-down"/></svg></button>
+        <div class="menu" role="menu">
+          <div class="menu-head"><b>Alex Morgan</b><small>alex.morgan@example.com</small></div>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-user"/></svg>Profile</a>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-shieldok"/></svg>Two-step sign-in<span class="tag-on">On</span></a>
+          <a role="menuitem" href="#"><svg class="ic"><use href="#i-lock"/></svg>Sign out everywhere</a>
+          <hr>
+          <a role="menuitem" href="#" data-go="login"><svg class="ic"><use href="#i-logout"/></svg>Sign out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Wednesday 28 October 2026 · NZ time</p>
+        <h1>Good morning, Alex</h1>
+      </div>
+      <div class="actions">
+        <button class="btn btn-default" type="button"><svg class="ic"><use href="#i-cal"/></svg>Open calendar</button>
+        <button class="btn btn-primary" type="button"><svg class="ic"><use href="#i-plus"/></svg>Reserve go-live</button>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span class="kpi-ic"><svg class="ic"><use href="#i-cal"/></svg></span><span class="kpi-label">Go-lives in November</span><span class="kpi-value">5</span><span class="kpi-sub">2 confirmed · 3 reserved</span></div>
+      <div class="kpi"><span class="kpi-ic"><svg class="ic"><use href="#i-check"/></svg></span><span class="kpi-label">Configuration on track</span><span class="kpi-value">4<small> / 5</small></span><span class="kpi-sub">Kauri Hills is behind plan</span></div>
+      <div class="kpi"><span class="kpi-ic"><svg class="ic"><use href="#i-db"/></svg></span><span class="kpi-label">Migrations in progress</span><span class="kpi-value">3</span><span class="kpi-sub">1 waiting for DB extract 2</span></div>
+      <div class="kpi kpi-warn"><span class="kpi-ic"><svg class="ic"><use href="#i-alert"/></svg></span><span class="kpi-label">Overdue tasks</span><span class="kpi-value">4</span><span class="kpi-sub">2 assigned to you</span></div>
+    </div>
+    <div class="grid2">
+      <section class="card">
+        <header class="card-head"><h2>Go-lives · next five weeks</h2><a href="#">Open calendar</a></header>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th scope="col">Go-live</th><th scope="col">Practice</th><th scope="col">Configuration</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Tue 27 Oct</b><small>Moved from Labour Day</small></td><td>Pinewood Surgery<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:100%"></i></div><span>100%</span></div></td><td><span class="badge live">Live</span></td></tr>
+            <tr><td><b>Mon 2 Nov</b><small>in 5 days</small></td><td>Harbourside Medical Centre<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:96%"></i></div><span>96%</span></div></td><td><span class="badge confirmed">Confirmed</span></td></tr>
+            <tr><td><b>Mon 9 Nov</b><small>in 12 days</small></td><td>Tōtara Street Clinic<small>Non-migration · NZ-1</small></td><td><div class="prog-cell"><div class="prog"><i style="width:74%"></i></div><span>74%</span></div></td><td><span class="badge confirmed">Confirmed</span></td></tr>
+            <tr><td><b>Mon 16 Nov</b><small>in 19 days</small></td><td>Riverbend Family Doctors<small>Migration · NZ-3</small></td><td><div class="prog-cell"><div class="prog"><i style="width:41%"></i></div><span>41%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+            <tr><td><b>Mon 23 Nov</b><small>in 26 days</small></td><td>Kauri Hills Medical<small>Migration · NZ-2</small></td><td><div class="prog-cell"><div class="prog"><i style="width:18%"></i></div><span>18%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+            <tr><td><b>Mon 30 Nov</b><small>in 33 days</small></td><td>Seaview Health Hub<small>Non-migration · NZ-1</small></td><td><div class="prog-cell"><div class="prog"><i style="width:5%"></i></div><span>5%</span></div></td><td><span class="badge reserved">Reserved</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+      <section class="card">
+        <header class="card-head"><h2>Recent activity</h2><a href="#">Audit log</a></header>
+        <ol class="feed">
+          <li><span class="who">PN</span><div><p><b>Priya N.</b> ticked <b>Mail merge templates</b></p><p class="meta">Harbourside Medical Centre · 10:42</p></div></li>
+          <li><span class="who">TW</span><div><p><b>Tom W.</b> logged <b>DB extract 2</b> as received, on time</p><p class="meta">Kauri Hills Medical · 09:15</p></div></li>
+          <li><span class="who">MT</span><div><p><b>Mere T.</b> finished migration step <b>Profile conversion</b></p><p class="meta">Riverbend Family Doctors · Yesterday 18:03</p></div></li>
+          <li><span class="who">AM</span><div><p><b>You</b> marked <b>Pinewood Surgery</b> as live</p><p class="meta">Tue 27 Oct · 08:30</p></div></li>
+          <li><span class="who">SJ</span><div><p><b>Sam J.</b> reserved <b>Mon 30 Nov</b> for Seaview Health Hub</p><p class="meta">Mon 26 Oct · 14:20</p></div></li>
+        </ol>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ================= STYLE GUIDE ================= -->
+<div class="guide" data-show="guide">
+  <header class="g-head">
+    <p class="eyebrow">Design 06 · Clinic</p>
+    <h1>Soft, modern, healthcare-friendly.</h1>
+    <p>Clinical blue with a mint secondary, generous rounding and soft shadows. A centred sign-in card on a light gradient, and a floating inset sidebar that keeps the page feeling open. Familiar to anyone who uses modern health or booking software.</p>
+  </header>
+
+  <section class="g-sec"><h2>Primary · Clinical blue (shade 6)</h2>
+    <div class="scale">
+      <div style="background:#E7F2FC">0<br>#E7F2FC</div><div style="background:#C6E0F8">1<br>#C6E0F8</div><div style="background:#9DCAF2">2<br>#9DCAF2</div><div style="background:#6FB0EA">3<br>#6FB0EA</div><div style="background:#4497E0">4<br>#4497E0</div>
+      <div style="background:#1F80D6;color:#fff">5<br>#1F80D6</div><div style="background:#0B6BCB;color:#fff">6 ★<br>#0B6BCB</div><div style="background:#0957A6;color:#fff">7<br>#0957A6</div><div style="background:#074482;color:#fff">8<br>#074482</div><div style="background:#05315E;color:#fff">9<br>#05315E</div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Surfaces, text &amp; mint</h2>
+    <div class="swatches">
+      <div class="sw"><span style="background:#F2F5F9"></span><div><b>Background</b><code>#F2F5F9</code></div></div>
+      <div class="sw"><span style="background:#FFFFFF"></span><div><b>Surface</b><code>#FFFFFF</code></div></div>
+      <div class="sw"><span style="background:#E2E8F0"></span><div><b>Border</b><code>#E2E8F0</code></div></div>
+      <div class="sw"><span style="background:#0D1B2A"></span><div><b>Text</b><code>#0D1B2A</code></div></div>
+      <div class="sw"><span style="background:#55667A"></span><div><b>Muted</b><code>#55667A</code></div></div>
+      <div class="sw"><span style="background:#0FA898"></span><div><b>Mint</b><code>#0FA898</code></div></div>
+      <div class="sw"><span style="background:#DDF6F2"></span><div><b>Mint soft</b><code>#DDF6F2</code></div></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Semantic &amp; go-live status</h2>
+    <div class="swatches">
+      <div class="sw"><span style="background:#0E7E6F"></span><div><b>Success</b><code>#0E7E6F</code></div></div>
+      <div class="sw"><span style="background:#A3650B"></span><div><b>Warning</b><code>#A3650B</code></div></div>
+      <div class="sw"><span style="background:#C0362C"></span><div><b>Danger</b><code>#C0362C</code></div></div>
+      <div class="sw"><span style="background:#0B6BCB"></span><div><b>Info</b><code>#0B6BCB</code></div></div>
+    </div>
+    <div class="comp" style="margin-top:12px"><span class="badge reserved">Reserved</span><span class="badge confirmed">Confirmed</span><span class="badge live">Live</span></div>
+  </section>
+
+  <section class="g-sec"><h2>Typography · Figtree + Roboto Mono</h2>
+    <div class="type">
+      <div class="type-row"><code>Display · 44 · 800</code><span style="font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1.1">Sign in to your account</span></div>
+      <div class="type-row"><code>H1 · 30 · 800</code><span style="font-size:30px;font-weight:800;letter-spacing:-.025em">Good morning, Alex</span></div>
+      <div class="type-row"><code>H2 · 16 · 800</code><span style="font-size:16px;font-weight:800">Go-lives · next five weeks</span></div>
+      <div class="type-row"><code>Body · 14.5 · 400</code><span>Priya N. ticked Mail merge templates for Harbourside Medical Centre.</span></div>
+      <div class="type-row"><code>Label · 13.5 · 600</code><span style="font-weight:600;font-size:13.5px">Configuration on track</span></div>
+      <div class="type-row"><code>Mono · 13 · 400</code><span style="font:400 13px var(--mono)">ref 7f3a9c1e · 2026-10-28T10:42Z</span></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Components</h2>
+    <div class="comp">
+      <button class="btn btn-primary" type="button">Primary</button>
+      <button class="btn btn-default" type="button">Default</button>
+      <button class="btn btn-subtle" type="button">Subtle</button>
+      <button class="btn btn-danger" type="button">Archive</button>
+      <div class="control" style="width:250px"><svg class="ic"><use href="#i-search"/></svg><input placeholder="Text input" aria-label="Example input"></div>
+    </div>
+  </section>
+
+  <section class="g-sec"><h2>Mantine theme sketch</h2>
+<pre>createTheme({
+  primaryColor: 'clinic',
+  primaryShade: 6,
+  colors: { clinic: ['#E7F2FC','#C6E0F8','#9DCAF2','#6FB0EA','#4497E0',
+                     '#1F80D6','#0B6BCB','#0957A6','#074482','#05315E'] },
+  fontFamily: 'Figtree, system-ui, sans-serif',
+  fontFamilyMonospace: 'Roboto Mono, Consolas, monospace',
+  headings: { fontWeight: '800' },
+  defaultRadius: 'lg',            // 12–14px controls, 20px cards
+  shadows: { sm: '0 1px 2px rgba(13,27,42,.04), 0 4px 16px -4px rgba(13,27,42,.06)' },
+  other: { mint: '#0FA898' },
+})
+// AppShell: inset floating navbar 268 (12px margin, 22px radius), transparent header 72</pre>
+  </section>
+</div>
+
+<nav class="mk" aria-label="Mockup screens">
+  <span class="mk-name">06 Clinic</span>
+  <a href="index.html">All designs</a>
+  <button type="button" data-go="login">Login</button>
+  <button type="button" data-go="error">Login error</button>
+  <button type="button" data-go="mfa">MFA</button>
+  <button type="button" data-go="app">App shell</button>
+  <button type="button" data-go="guide">Style guide</button>
+</nav>
+
+<script>
+(function(){
+  if(window.self!==window.top)document.documentElement.classList.add('embed');
+  var ids=['login','error','mfa','app','guide'];
+  function show(id){
+    if(ids.indexOf(id)<0)id='login';
+    document.querySelectorAll('[data-show]').forEach(function(el){el.hidden=el.getAttribute('data-show').split(' ').indexOf(id)<0;});
+    document.querySelectorAll('.mk [data-go]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-go')===id);});
+    history.replaceState(null,'','#'+id);
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');
+    if(go){e.preventDefault();show(go.getAttribute('data-go'));}
+    else if(e.target.closest('a[href="#"]'))e.preventDefault();
+    var pw=e.target.closest('[data-pw]');
+    if(pw){var inp=pw.parentElement.querySelector('input');var vis=inp.type==='text';inp.type=vis?'password':'text';pw.setAttribute('aria-pressed',String(!vis));pw.setAttribute('aria-label',vis?'Show password':'Hide password');}
+    if(e.target.closest('[data-nav]')){var s=document.querySelector('.shell');s.classList.toggle(window.innerWidth<900?'nav-open':'collapsed');}
+    var menu=e.target.closest('[data-menu]');
+    document.querySelectorAll('.has-menu.open').forEach(function(m){if(!menu||m!==menu.parentElement){m.classList.remove('open');m.querySelector('[data-menu]').setAttribute('aria-expanded','false');}});
+    if(menu){var p=menu.parentElement;p.classList.toggle('open');menu.setAttribute('aria-expanded',String(p.classList.contains('open')));}
+  });
+  document.addEventListener('submit',function(e){e.preventDefault();show(e.target.getAttribute('data-next'));});
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1));});
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>

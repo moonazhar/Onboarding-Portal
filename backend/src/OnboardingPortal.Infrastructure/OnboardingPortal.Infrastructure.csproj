@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnboardingPortal.Application\OnboardingPortal.Application.csproj" />
+    <ProjectReference Include="..\OnboardingPortal.Domain\OnboardingPortal.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

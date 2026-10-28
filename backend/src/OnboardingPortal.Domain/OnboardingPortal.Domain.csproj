@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Business rules only. No project references and no packages (docs/architecture/overview.md §6). -->
+
+</Project>
